@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+  	android:padding="20dp">
+  	
+    <TextView 
+        android:id="@+id/cliente"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:textSize="20sp"
+	    android:textStyle="bold"/>
+	
+    <LinearLayout 
+        android:id="@+id/information"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/cliente">
+        
+        <TextView
+	        android:id="@+id/direccion"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	       	android:textSize="13sp"/>
+        
+        <TextView
+	        android:id="@+id/telefono"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:textSize="13sp"/>
+        
+        <TextView
+	        android:id="@+id/horario"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:textSize="13sp"/>
+    </LinearLayout>
+    
+
+</RelativeLayout> 
+<!-- From: file:/D:/StudioProjects/HelpyCar/app/src/main/res/layout/list_item.xml -->

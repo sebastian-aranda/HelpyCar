@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:padding="20dp" >
+	
+    <LinearLayout
+        android:id="@+id/imageSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        
+        <ImageView
+	        android:id="@+id/imagen"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:src="@drawable/logo"/>
+    </LinearLayout>
+    
+    
+    <LinearLayout
+        android:id="@+id/firstInformation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageSection"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    
+    
+    
+    <LinearLayout 
+        android:id="@+id/secondInformation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/firstInformation"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+        
+        <LinearLayout
+			android:id="@+id/horario"
+			android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            
+            <TextView 
+	            android:layout_width="70dp"
+	            android:layout_height="wrap_content"
+	            android:textStyle="bold"
+	            android:text="@string/horarioTitle"/>
+            
+            <TextView 
+	            android:id="@+id/horarioText"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"/>
+                
+		</LinearLayout>
+        
+        <LinearLayout
+	        android:id="@+id/mail"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal">
+	        
+	        <TextView 
+	            android:layout_width="70dp"
+	            android:layout_height="wrap_content"
+	            android:textStyle="bold"
+	            android:text="@string/mailTitle"/>
+	        
+	        <TextView 
+	            android:id="@+id/mailText"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"/> 
+	            
+		</LinearLayout>
+	    
+        <LinearLayout
+	        android:id="@+id/phone"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal">
+	        
+            <TextView 
+	            android:layout_width="70dp"
+	            android:layout_height="wrap_content"
+	            android:textStyle="bold"
+	            android:text="@string/phone_numberTitle"/>
+	            
+	        <TextView
+	            android:id="@+id/phone_numberText"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"/>
+	        
+	    </LinearLayout>
+    </LinearLayout>
+
+	<LinearLayout
+	    android:id="@+id/rating"
+	    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/secondInformation"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:gravity="center">
+        
+	    <TextView 
+	        android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="@string/ratingTittle"/>
+	    
+	    <RatingBar
+	        android:id="@+id/ratingBar"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:numStars="5"
+	        android:stepSize="1.0"
+	        android:rating="0.0" />
+	</LinearLayout>    
+	
+    <LinearLayout
+        android:id="@+id/clientButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rating"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="center">
+        
+        <Button
+		    style="@style/LocalActivityButtons"
+		    android:id="@+id/callingButton"
+		    android:text="@string/callingButton"/>
+        
+        <Button
+		    style="@style/LocalActivityButtons"
+		    android:id="@+id/contactButton"
+		    android:text="@string/contactButton"/>
+        
+        <Button
+		    style="@style/LocalActivityButtons"
+		    android:id="@+id/mapButton"
+		    android:text="@string/mapButton"/>
+    </LinearLayout>
+	
+    <LinearLayout
+        android:id="@+id/clientDescriptionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/clientButtons"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:background="#eeeeee">
+        
+        <TextView 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/localDescriptionTitle"/>
+        
+        <TextView 
+            android:id="@+id/localDescriptionText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+</RelativeLayout>

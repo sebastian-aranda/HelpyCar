@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="cl.osare.helpycar.ListMenuActivity" >
+	
+    <item android:id="@+id/search"
+          android:title="@string/search_title"
+          android:icon="@drawable/ic_search_white_24dp"
+          android:showAsAction="ifRoom|collapseActionView"
+          android:actionViewClass="android.widget.SearchView" />
+    
+    <item
+        android:id="@+id/location"
+        android:title="@string/location"
+        android:icon="@drawable/ic_location_on_white_24dp"
+        android:showAsAction="ifRoom|collapseActionView"/>
+
+</menu>
+<!-- From: file:/D:/StudioProjects/HelpyCar/app/src/main/res/menu/list.xml -->

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:paddingBottom="10dp"
+    android:paddingRight="2dp"
+    android:paddingLeft="2dp">
+    
+    <LinearLayout
+        android:id="@+id/imageSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        
+        <ImageView
+	        android:id="@+id/grid_image"
+	        android:layout_width="72dp"
+	        android:layout_height="72dp">
+	    </ImageView>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/textSection"
+        android:layout_below="@id/imageSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/grid_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="12sp"/>
+	</LinearLayout>
+
+</RelativeLayout>
+<!-- From: file:/D:/StudioProjects/HelpyCar/app/src/main/res/layout/grid_item.xml -->

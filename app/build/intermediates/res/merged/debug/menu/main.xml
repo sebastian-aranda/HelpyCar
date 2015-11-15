@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="cl.osare.helpycar.MainActivity" >
+	
+    <item android:id="@+id/menu_activity"
+        android:title="@string/search_title"
+        android:icon="@drawable/ic_apps_white_24dp"
+	    android:showAsAction="ifRoom|collapseActionView"/>
+
+</menu>
+<!-- From: file:/D:/StudioProjects/HelpyCar/app/src/main/res/menu/main.xml -->

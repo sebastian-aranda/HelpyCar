@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HelpyCar</string>
+    <string name="hello_world">Hello world!</string>
+    
+    <!-- MenuActivity -->
+    <string name="MenuActivityTittle">Asdf</string>
+    
+    <!-- LocalActivity -->
+    <string name="horarioTitle">Horario:</string>
+    <string name="mailTitle">Mail:</string>
+    <string name="phone_numberTitle">Teléfono:</string>
+    <string name="callingButton">Llamar</string>
+    <string name="contactButton">Agregar a Contactos</string>
+    <string name="mapButton">Mapa</string>
+    <string name="localDescriptionTitle">Descripción:</string>
+    <string name="ratingTittle">Califica este local:</string>
+    
+    <!-- Action Bar Strings -->
+    <string name="menu_activity">Menu</string>
+    <string name="listMenu_activity">List Menu</string>
+    <string name="location">Ver en Mapa</string>
+    <string name="search_hint">Buscar</string>
+    
+    <string name="search_title">Buscar</string>
+	
+    <!-- Colors -->
+    <color name="actionBarBackground">#F3822C</color>
+</resources>

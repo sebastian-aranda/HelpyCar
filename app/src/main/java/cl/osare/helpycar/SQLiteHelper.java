@@ -16,8 +16,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	private static final int DATABASE_VERSION = Configurations.DATABASE_VERSION;
 	private static final String DATABASE_NAME = Configurations.DATABASE_NAME;
 	private static final String DATABASE_PATH = Configurations.DATABASE_PATH;
-	
-	private static final String[] COLUMNS_LOCALES = {"id", "nombre", "localizacion", "tipo", "direccion", "telefono", "horario", "mail", "descripcion"};
 
 	public SQLiteHelper(Context context){
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -25,25 +23,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
 	@Override
     public void onCreate(SQLiteDatabase db) {
-        // SQL statement to create book table
-        String create_locales = "CREATE TABLE locales ( " +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "nombre TEXT, "+
-                "localizacion TEXT, "+
-                "tipo INTEGER, "+
-                "direccion INTEGER, "+
-                "telefono TEXT, "+
-                "horario TEXT, "+
-                "mail TEXT, "+
-                "descripcion TEXT )";
-        
-        String create_version = "CREATE TABLE version (" +
-        		"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-        		"comentario TEXT )";
- 
-        db.execSQL(create_locales);
-        db.execSQL(create_version);
-        
+        reloadLocales(db);
+        reloadVersion(db);
         reloadCalificaciones(db);
         
     }
@@ -66,19 +47,43 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	
 	@Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Drop older books table if existed
-        db.execSQL("DROP TABLE IF EXISTS locales");
-        db.execSQL("DROP TABLE IF EXISTS version");
-        
-        // create fresh books table
         this.onCreate(db);
     }
-	
+
+	//Reload Configurations
+	public void reloadLocales(SQLiteDatabase db){
+		db.execSQL("DROP TABLE IF EXISTS locales");
+
+		String sql = "CREATE TABLE locales ( " +
+				"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				"nombre TEXT, "+
+				"localizacion TEXT, "+
+				"direccion INTEGER, "+
+				"telefono TEXT, "+
+				"horario TEXT, "+
+				"mail TEXT, "+
+				"logo TEXT, "+
+				"photo TEXT, "+
+				"descripcion TEXT, "+
+				"premium TEXT )";
+
+		db.execSQL(sql);
+	}
+
+	public void reloadVersion(SQLiteDatabase db){
+		db.execSQL("DROP TABLE IF EXISTS version");
+
+		String sql = "CREATE TABLE version (" +
+				"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				"comentario TEXT )";
+
+		db.execSQL(sql);
+	}
+
 	public void reloadCalificaciones(SQLiteDatabase db){
-		//Droping Table
 		db.execSQL("DROP TABLE IF EXISTS calificaciones");
 		
-		//Creating table
+
 		String create_calificaciones = "CREATE TABLE calificaciones (" +
         		"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
         		"dispositivo TEXT, " +
@@ -87,129 +92,91 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		
 		db.execSQL(create_calificaciones);
 	}
-	
+
+	//inserting functions
 	public void addVersion(int id, String comentario) {
-		
 		SQLiteDatabase db = this.getWritableDatabase();		
-		
-		// 2. create ContentValues to add key "column"/value
+
 		ContentValues values = new ContentValues();
 		values.put("id", id);
 		values.put("comentario", comentario);
-				
-		// 3. insert
-		db.insert("version", // table
-	        null, //nullColumnHack
-	        values); // key/value -> keys = column names/ values = column values
-		
-		// 4. close
+
+		db.insert("version", null, values);
+
 		db.close();
 	}
 	
 	public void addCalificacion(int id, String dispositivo, int id_local, int nota){
-		
-		// 1. get reference to writable DB
 		SQLiteDatabase db = this.getWritableDatabase();
-		
-		// 2. create ContentValues to add key "column"/value
+
 		ContentValues values = new ContentValues();
 		values.put("id", id);
 		values.put("dispositivo", dispositivo);
 		values.put("id_local", id_local);
 		values.put("nota", nota);
-		
-		// 3. insert
-		db.insert("calificaciones", // table
-		        null, //nullColumnHack
-		        values); // key/value -> keys = column names/ values = column values
-		
-		// 4. close
+
+		db.insert("calificaciones", null, values);
+
 		db.close();
 	}
-	
+
+	/* addCalificacion es para poblar la tabla desde el servidor externo, addNewCalificacion es para agregar una calificacion realizada por el usuario*/
 	public void addNewCalificacion(String dispositivo, int id_local, int nota){
-		
-		// 1. get reference to writable DB
 		SQLiteDatabase db = this.getWritableDatabase();
-		
-		// 2. create ContentValues to add key "column"/value
+
 		ContentValues values = new ContentValues();
 		values.put("dispositivo", dispositivo);
 		values.put("id_local", id_local);
 		values.put("nota", nota);
-		
-		// 3. insert
-		db.insert("calificaciones", // table
-		        null, //nullColumnHack
-		        values); // key/value -> keys = column names/ values = column values
-		
-		// 4. close
+
+		db.insert("calificaciones", null, values);
+
 		db.close();
 	}
 	
 	public void addLocal(Local local){
-        //for logging
-		//Log.d("addBook", book.toString());
-		
-		// 1. get reference to writable DB
 		SQLiteDatabase db = this.getWritableDatabase();
-		
-		// 2. create ContentValues to add key "column"/value
+
 		ContentValues values = new ContentValues();
 		values.put("nombre", local.getNombre());
 		values.put("localizacion", local.getLocalizacion());
-		values.put("tipo", local.getTipo());
 		values.put("direccion", local.getDireccion());
 		values.put("telefono", local.getTelefono());
 		values.put("horario", local.getHorario());
 		values.put("mail", local.getMail());
+		values.put("logo", local.getLogo());
+		values.put("photo", local.getPhoto());
 		values.put("descripcion", local.getDescripcion());
-		
-		// 3. insert
-		db.insert("locales", // table
-		        null, //nullColumnHack
-		        values); // key/value -> keys = column names/ values = column values
-		
-		// 4. close
+		values.put("premium", local.getPremium());
+
+		db.insert("locales", null, values);
+
 		db.close();
 	}
-	
+
+	//getting functions
 	public Local getLocal(int id){
-	    // 1. get reference to readable DB
 	    SQLiteDatabase db = this.getReadableDatabase();
-	 
-	    // 2. build query
-	    Cursor cursor =
-	            db.query("locales", // a. table
-	            COLUMNS_LOCALES, // b. column names
-	            " id = ?", // c. selections
-	            new String[] { String.valueOf(id) }, // d. selections args
-	            null, // e. group by
-	            null, // f. having
-	            null, // g. order by
-	            null); // h. limit
-	 
-	    // 3. if we got results get the first one
-	    
+
+		String query = "SELECT * FROM locales WHERE id = "+String.valueOf(id);
+		Cursor cursor = db.rawQuery(query, null);
+
 	    if (cursor != null)
 	        cursor.moveToFirst();
-	 
-	    // 4. build book object
+
 	    Local local = new Local();
 	    local.setId(Integer.parseInt(cursor.getString(0)));
 	    local.setNombre(cursor.getString(1));
 	    local.setLocalizacion(cursor.getString(2));
-	    local.setTipo(Integer.parseInt(cursor.getString(3)));
-	    local.setDireccion(cursor.getString(4));
-	    local.setTelefono(cursor.getString(5));
-	    local.setHorario(cursor.getString(6));
-	    local.setMail(cursor.getString(7));
-	    local.setDescripcion(cursor.getString(8));
-	    
-	    //log
-	    //Log.d("getBook("+id+")", book.toString());
-	 
-	    // 5. return book
+	    local.setDireccion(cursor.getString(3));
+	    local.setTelefono(cursor.getString(4));
+	    local.setHorario(cursor.getString(5));
+	    local.setMail(cursor.getString(6));
+		local.setLogo(cursor.getString(7));
+		local.setPhoto(cursor.getString(8));
+	    local.setDescripcion(cursor.getString(9));
+		local.setPremium(Integer.parseInt(cursor.getString(10)));
+
 	    return local;
 	}
 	

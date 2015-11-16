@@ -7,30 +7,35 @@ public class Local{
 	private int id;
 	private String nombre;
 	private String localizacion;
-	private int tipo;
 	private String direccion;
 	private String telefono;
 	private String horario;
 	private String mail;
+	private String logo;
+	private String photo;
 	private String descripcion;
-	
+
+	private int premium;
 	private Marker marker;
 	
 	public Local(){}
 	
-	public Local(int id, String nombre, String localizacion, int tipo, String direccion, String telefono, String horario, 
-			String mail, String descripcion){
+	public Local(int id, String nombre, String localizacion, String direccion, String telefono, String horario,
+			String mail, String logo, String photo, String descripcion, int premium){
 		this.id = id;
 		this.nombre = nombre;
 		this.localizacion = localizacion;
-		this.tipo = tipo; 
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.horario = horario;
 		this.mail = mail;
+		this.logo = logo;
+		this.photo = photo;
 		this.descripcion = descripcion;
+		this.premium = premium;
 	}
-	
+
+	//GETTERS
 	public int getId(){
 		return id;
 	}
@@ -41,10 +46,6 @@ public class Local{
 
 	public String getLocalizacion() {
 		return localizacion;
-	}
-	
-	public int getTipo(){
-		return tipo;
 	}
 
 	public String getDireccion() {
@@ -63,14 +64,27 @@ public class Local{
 		return mail;
 	}
 
+	public String getLogo() {
+		return logo;
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
 	public String getDescripcion() {
 		return descripcion;
+	}
+
+	public int getPremium() {
+		return premium;
 	}
 	
 	public Marker getMarker(){
 		return marker;
 	}
-	
+
+	//SETTERS
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -81,10 +95,6 @@ public class Local{
 
 	public void setLocalizacion(String localizacion) {
 		this.localizacion = localizacion;
-	}
-
-	public void setTipo(int tipo) {
-		this.tipo = tipo;
 	}
 
 	public void setDireccion(String direccion) {
@@ -103,8 +113,20 @@ public class Local{
 		this.mail = mail;
 	}
 
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public void setPremium(int premium) {
+		this.premium = premium;
 	}
 
 	public void setMarker(Marker marker) {

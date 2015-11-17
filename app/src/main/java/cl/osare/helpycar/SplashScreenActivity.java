@@ -37,11 +37,8 @@ public class SplashScreenActivity extends Activity {
         super.onCreate(savedInstanceState);
         
         db = new SQLiteHelper(this);
-        
-        // Set portrait orientation
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        
-        // Hide title bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
  
         setContentView(R.layout.splash_screen);
@@ -50,25 +47,45 @@ public class SplashScreenActivity extends Activity {
         	new GetLocalTask().execute(new ApiConnector());
         }
         else{
-        	//Alerta recomendar estar conectado
         	AlertDialog dialog = setInternetDialog();
         }        
     }
-    
-    private class GetLocalTask extends AsyncTask<ApiConnector,Long,JSONArray> {   
-    	
-		@Override
-        protected JSONArray doInBackground(ApiConnector... params) {
+
+	private class GetVersionTask extends AsyncTask<ApiConnector,Long,JSONArray> {
+		protected JSONArray doInBackground(ApiConnector... params) {
 			return params[0].getAllData(url_get+"?version=1");
+		}
+
+		protected void onPostExecute(JSONArray jsonArray) {
+			if (compareVersions(jsonArray, db))
+				new GetCalificacionesTask().execute(new ApiConnector());
+			else
+				new GetLocalesTask().execute(new ApiConnector());
+		}
+	}
+    
+    private class GetLocalesTask extends AsyncTask<ApiConnector,Long,JSONArray> {
+        protected JSONArray doInBackground(ApiConnector... params) {
+			return params[0].getAllData(url_get+"?locales=1");
         }
 
-        @Override
         protected void onPostExecute(JSONArray jsonArray) {
             loadLocalesDB(jsonArray, db);
-            new GetCalificacionesTask().execute(new ApiConnector());
-            //openMainActivity();
+            new GetRubrosTask().execute(new ApiConnector());
         }
     }
+
+	private class GetRubrosTask extends AsyncTask<ApiConnector,Long,JSONArray> {
+		protected JSONArray doInBackground(ApiConnector... params) {
+			return params[0].getAllData(url_get+"?rubros=1");
+		}
+
+		protected void onPostExecute(JSONArray jsonArray) {
+			loadRubrosLocalesDB(jsonArray, db);
+			new GetCalificacionesTask().execute(new ApiConnector());
+			//openMainActivity();
+		}
+	}
     
     private class GetCalificacionesTask extends AsyncTask<ApiConnector,Long,JSONArray> {   
     	
@@ -84,47 +101,51 @@ public class SplashScreenActivity extends Activity {
         }
     }
 
-    
-    private void loadLocalesDB(JSONArray jsonArray, SQLiteHelper db) {
-    	
-    	int versionInternal;
-    	String comentarioInternal;
-    	if (db.checkDataBase()){
-    		String[] version = db.getVersion();
-    		versionInternal = Integer.parseInt(version[0]);
-    		comentarioInternal = version[1];
-    	}
-    	else{
-    		versionInternal = 0;
-    		comentarioInternal = "";
-    	}
-    	
-    	int versionExternal = versionInternal;
-    	String comentarioExternal = comentarioInternal;
+	private boolean compareVersions(JSONArray jsonArray, SQLiteHelper db){
+		int versionInternal;
+		String comentarioInternal;
+
+		if (db.checkDataBase()){
+			String[] version = db.getVersion();
+			versionInternal = Integer.parseInt(version[0]);
+			comentarioInternal = version[1];
+		}
+		else{
+			versionInternal = 0;
+			comentarioInternal = "";
+		}
+
+		int versionExternal = versionInternal;
+		String comentarioExternal = comentarioInternal;
 		try {
 			versionExternal = jsonArray.getJSONObject(0).getInt("version_id");
 			comentarioExternal = jsonArray.getJSONObject(0).getString("version_comentario");
 		} catch (JSONException e1) {
 			e1.printStackTrace();
 		}
-		
-    	if (versionInternal == versionExternal){
-    		return;
-    	}
-    	
-    	db.onUpgrade(db.getDatabase(), 1, 1);
-    	db.addVersion(versionExternal, comentarioExternal);
-    	Toast.makeText(this, "Base de datos actualizada \nVersion: "+versionExternal+"\nComentario: "+comentarioExternal, Toast.LENGTH_LONG).show();
-    	
+
+		if (versionInternal == versionExternal){
+			return true;
+		}
+
+		db.onUpgrade(db.getDatabase(), 1, 1);
+		db.addVersion(versionExternal, comentarioExternal);
+		Toast.makeText(this, "Base de datos actualizada \nVersion: "+versionExternal+"\nComentario: "+comentarioExternal, Toast.LENGTH_LONG).show();
+
+		return false;
+	}
+
+    private void loadLocalesDB(JSONArray jsonArray, SQLiteHelper db) {
         for(int i=0; i<jsonArray.length();i++){
             JSONObject json = null;
             try {
                 json = jsonArray.getJSONObject(i);
                 Local local = new Local(json.getInt("id"), json.getString("nombre"), 
-                		json.getString("localizacion"), json.getInt("tipo"), 
-                		json.getString("direccion"), json.getString("telefono"),
-                		json.getString("horario"), json.getString("mail"),
-                		json.getString("descripcion"));
+                		json.getString("localizacion"), json.getString("direccion"),
+						json.getString("telefono"), json.getString("horario"),
+						json.getString("mail"), json.getString("logo"),
+						json.getString("photo"), json.getString("descripcion"),
+						json.getInt("premium"));
                 
                 
                 db.addLocal(local);
@@ -134,9 +155,21 @@ public class SplashScreenActivity extends Activity {
 
         }
     }
+
+	private void loadRubrosLocalesDB(JSONArray jsonArray, SQLiteHelper db) {
+		for(int i=0; i<jsonArray.length();i++){
+			JSONObject json = null;
+			try {
+				json = jsonArray.getJSONObject(i);
+				db.addRubroLocal(json.getInt("id"), json.getInt("id_local"), json.getInt("id_rubro"));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+		}
+	}
     
     private void loadCalificacionesDB(JSONArray jsonArray, SQLiteHelper db) {
-    	
     	db.reloadCalificaciones(db.getDatabase());
         
     	if (jsonArray == null)
@@ -163,15 +196,13 @@ public class SplashScreenActivity extends Activity {
     private void openMainActivity(){
     	Intent mainIntent = new Intent().setClass(SplashScreenActivity.this, MainActivity.class);
         startActivity(mainIntent);
-        // Close the activity so the user won't able to go back this activity pressing Back button
         finish();
     }
     
     private AlertDialog setInternetDialog(){
-    	
     	AlertDialog alert_dialog = new AlertDialog.Builder(this)
-    		.setTitle("Sin conexi�n a internet")
-    		.setMessage("Estar conectado a internet le permitir� tener la informaci�n m�s actualizada �Desea conectarse?")
+    		.setTitle("Sin conexión a internet")
+    		.setMessage("Estar conectado a internet le permitirá tener la información más actualizada ¿Desea conectarse?")
     		.setPositiveButton("Si", new DialogInterface.OnClickListener() {
     			public void onClick(DialogInterface dialog, int which) { 
     				conectarse();
@@ -194,7 +225,6 @@ public class SplashScreenActivity extends Activity {
     }
     
     private void conectarse(){
-    	
     	ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
     	NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 

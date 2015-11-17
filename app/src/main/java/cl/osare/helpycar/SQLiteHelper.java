@@ -24,9 +24,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	@Override
     public void onCreate(SQLiteDatabase db) {
         reloadLocales(db);
-        reloadVersion(db);
-        reloadCalificaciones(db);
-        
+		reloadRubrosLocales(db);
+		reloadCalificaciones(db);
+		reloadVersion(db);
     }
 	
 	public SQLiteDatabase getDatabase(){
@@ -70,6 +70,31 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		db.execSQL(sql);
 	}
 
+	public void reloadRubrosLocales(SQLiteDatabase db){
+		db.execSQL("DROP TABLE IF EXISTS rubros_locales");
+
+
+		String sql = "CREATE TABLE rubros_locales(" +
+				"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				"id_local INTEGER, " +
+				"id_rubro INTEGER )";
+
+		db.execSQL(sql);
+	}
+
+	public void reloadCalificaciones(SQLiteDatabase db){
+		db.execSQL("DROP TABLE IF EXISTS calificaciones");
+		
+
+		String sql = "CREATE TABLE calificaciones (" +
+        		"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+        		"dispositivo TEXT, " +
+        		"id_local INTEGER, " +
+        		"nota INTEGER )";
+		
+		db.execSQL(sql);
+	}
+
 	public void reloadVersion(SQLiteDatabase db){
 		db.execSQL("DROP TABLE IF EXISTS version");
 
@@ -80,32 +105,27 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		db.execSQL(sql);
 	}
 
-	public void reloadCalificaciones(SQLiteDatabase db){
-		db.execSQL("DROP TABLE IF EXISTS calificaciones");
-		
-
-		String create_calificaciones = "CREATE TABLE calificaciones (" +
-        		"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-        		"dispositivo TEXT, " +
-        		"id_local INTEGER, " +
-        		"nota INTEGER )";
-		
-		db.execSQL(create_calificaciones);
-	}
-
 	//inserting functions
-	public void addVersion(int id, String comentario) {
-		SQLiteDatabase db = this.getWritableDatabase();		
+	public void addLocal(Local local){
+		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-		values.put("id", id);
-		values.put("comentario", comentario);
+		values.put("nombre", local.getNombre());
+		values.put("localizacion", local.getLocalizacion());
+		values.put("direccion", local.getDireccion());
+		values.put("telefono", local.getTelefono());
+		values.put("horario", local.getHorario());
+		values.put("mail", local.getMail());
+		values.put("logo", local.getLogo());
+		values.put("photo", local.getPhoto());
+		values.put("descripcion", local.getDescripcion());
+		values.put("premium", local.getPremium());
 
-		db.insert("version", null, values);
+		db.insert("locales", null, values);
 
 		db.close();
 	}
-	
+
 	public void addCalificacion(int id, String dispositivo, int id_local, int nota){
 		SQLiteDatabase db = this.getWritableDatabase();
 
@@ -116,6 +136,19 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		values.put("nota", nota);
 
 		db.insert("calificaciones", null, values);
+
+		db.close();
+	}
+
+	public void addRubroLocal(int id, int id_local, int id_rubro){
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put("id", id);
+		values.put("id_local", id_local);
+		values.put("id_rubro", id_rubro);
+
+		db.insert("rubros_locales", null, values);
 
 		db.close();
 	}
@@ -133,23 +166,15 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
 		db.close();
 	}
-	
-	public void addLocal(Local local){
+
+	public void addVersion(int id, String comentario) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-		values.put("nombre", local.getNombre());
-		values.put("localizacion", local.getLocalizacion());
-		values.put("direccion", local.getDireccion());
-		values.put("telefono", local.getTelefono());
-		values.put("horario", local.getHorario());
-		values.put("mail", local.getMail());
-		values.put("logo", local.getLogo());
-		values.put("photo", local.getPhoto());
-		values.put("descripcion", local.getDescripcion());
-		values.put("premium", local.getPremium());
+		values.put("id", id);
+		values.put("comentario", comentario);
 
-		db.insert("locales", null, values);
+		db.insert("version", null, values);
 
 		db.close();
 	}
@@ -180,36 +205,24 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	    return local;
 	}
 	
-	public ArrayList<Local> getLocalesByTipo(int tipo){
-		ArrayList<Local> locales = new ArrayList<Local>();
+	public ArrayList<Integer> getRubrosLocal(int local){
+		ArrayList<Integer> rubros = new ArrayList<Integer>();
 		
-		String query = "SELECT * FROM locales WHERE tipo = "+String.valueOf(tipo);
+		String query = "SELECT id_rubro FROM rubros_locales WHERE id_local = "+String.valueOf(local);
 		
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(query, null);
 		
 		if (cursor.moveToFirst()) {
            do {
-        	   Local local = new Local();
-        	   local.setId(Integer.parseInt(cursor.getString(0)));
-        	   local.setNombre(cursor.getString(1));
-        	   local.setLocalizacion(cursor.getString(2));
-        	   local.setTipo(Integer.parseInt(cursor.getString(3)));
-        	   local.setDireccion(cursor.getString(4));
-        	   local.setTelefono(cursor.getString(5));
-        	   local.setHorario(cursor.getString(6));
-        	   local.setMail(cursor.getString(7));
-        	   local.setDescripcion(cursor.getString(8));
- 
-               locales.add(local);
+               rubros.add(Integer.parseInt(cursor.getString(0)));
            } while (cursor.moveToNext());
         }
 		
-		return locales;
+		return rubros;
 	}
 	
 	public int getCalificacion(int id_local){
-		
 		String query = "SELECT * FROM calificaciones WHERE id_local = ?";
 		
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -218,8 +231,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		int suma = 0;
 		int cantidad = 0;
 		float promedio = -1;
-		
-		
+
 		if (cursor.moveToFirst()) {
            do {
         	   suma += Integer.parseInt(cursor.getString(3));
@@ -233,10 +245,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		return Math.round(promedio);
 	}
 	
-	public int getCalificacionByDispositivo(String dispositivo, int id_local){
-		
+	public int getCalificacionByDispositivo(String dispositivo, int id_local) {
 		String query = "SELECT * FROM calificaciones WHERE dispositivo = ? AND id_local = ?";
-	    SQLiteDatabase db = this.getReadableDatabase();
+
+		SQLiteDatabase db = this.getReadableDatabase();
 	    Cursor cursor = db.rawQuery(query, new String[] { dispositivo, String.valueOf(id_local) });
 	    
 	    int nota = -1;
@@ -247,62 +259,48 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	}
 	
 	public int updateCalificacion(String dispositivo, int id_local, int nota) {
-		 
-	    // 1. get reference to writable DB
 	    SQLiteDatabase db = this.getWritableDatabase();
-	 
-	    // 2. create ContentValues to add key "column"/value
+
 	    ContentValues values = new ContentValues();
 	    values.put("nota", nota);
-	 
-	    // 3. updating row
-	    int i = db.update("calificaciones", //table
-	            values, // column/value
-	            " dispositivo = ? AND id_local = ?", // selections
-	            new String[] { dispositivo, String.valueOf(id_local) }); //selection args
-	 
-	    // 4. close
+
+	    int i = db.update("calificaciones", values, " dispositivo = ? AND id_local = ?", new String[] { dispositivo, String.valueOf(id_local) });
+
 	    db.close();
-	 
 	    return i;
 	}
 	
 	public List<Local> getAllLocales() {
        List<Local> locales = new LinkedList<Local>();
- 
-       // 1. build the query
+
        String query = "SELECT  * FROM locales";
- 
-       // 2. get reference to writable DB
+
        SQLiteDatabase db = this.getWritableDatabase();
        Cursor cursor = db.rawQuery(query, null);
- 
-       // 3. go over each row, build book and add it to list
+
        if (cursor.moveToFirst()) {
            do {
-        	   Local local = new Local();
-        	   local.setId(Integer.parseInt(cursor.getString(0)));
-        	   local.setNombre(cursor.getString(1));
-        	   local.setLocalizacion(cursor.getString(2));
-        	   local.setTipo(Integer.parseInt(cursor.getString(3)));
-        	   local.setDireccion(cursor.getString(4));
-        	   local.setTelefono(cursor.getString(5));
-        	   local.setHorario(cursor.getString(6));
-        	   local.setMail(cursor.getString(7));
-        	   local.setDescripcion(cursor.getString(8));
+			   Local local = new Local();
+			   local.setId(Integer.parseInt(cursor.getString(0)));
+			   local.setNombre(cursor.getString(1));
+			   local.setLocalizacion(cursor.getString(2));
+			   local.setDireccion(cursor.getString(3));
+			   local.setTelefono(cursor.getString(4));
+			   local.setHorario(cursor.getString(5));
+			   local.setMail(cursor.getString(6));
+			   local.setLogo(cursor.getString(7));
+			   local.setPhoto(cursor.getString(8));
+			   local.setDescripcion(cursor.getString(9));
+			   local.setPremium(Integer.parseInt(cursor.getString(10)));
  
                locales.add(local);
            } while (cursor.moveToNext());
        }
- 
-       //Log.d("getAllBooks()", books.toString());
- 
-       // return books
+
        return locales;
 	}
 	
 	public int countLocales(){
-	    
 		String query = "SELECT  COUNT(*) AS count FROM locales";
 	    SQLiteDatabase db = this.getReadableDatabase();
 	    Cursor cursor = db.rawQuery(query, null);
@@ -327,48 +325,32 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	}
 	
 	public int updateLocal(Local local) {
-		 
-	    // 1. get reference to writable DB
 	    SQLiteDatabase db = this.getWritableDatabase();
-	 
-	    // 2. create ContentValues to add key "column"/value
+
 	    ContentValues values = new ContentValues();
-	    values.put(COLUMNS_LOCALES[1], local.getNombre());
-		values.put(COLUMNS_LOCALES[2], local.getLocalizacion());
-		values.put(COLUMNS_LOCALES[3], local.getTipo());
-		values.put(COLUMNS_LOCALES[4], local.getDireccion());
-		values.put(COLUMNS_LOCALES[5], local.getTelefono());
-		values.put(COLUMNS_LOCALES[6], local.getHorario());
-		values.put(COLUMNS_LOCALES[7], local.getMail());
-		values.put(COLUMNS_LOCALES[8], local.getDescripcion());
-	 
-	    // 3. updating row
-	    int i = db.update("locales", //table
-	            values, // column/value
-	            " id = ?", // selections
-	            new String[] { String.valueOf(local.getId()) }); //selection args
-	 
-	    // 4. close
+		values.put("nombre", local.getNombre());
+		values.put("localizacion", local.getLocalizacion());
+		values.put("direccion", local.getDireccion());
+		values.put("telefono", local.getTelefono());
+		values.put("horario", local.getHorario());
+		values.put("mail", local.getMail());
+		values.put("logo", local.getLogo());
+		values.put("photo", local.getPhoto());
+		values.put("descripcion", local.getDescripcion());
+		values.put("premium", local.getPremium());
+
+	    int i = db.update("locales", values, " id = ?", new String[] { String.valueOf(local.getId()) });
+
 	    db.close();
-	 
 	    return i;
 	}
 	
-	public void deleteLocal(Local local) { 
-	    
-	    // 1. get reference to writable DB
+	public void deleteLocal(Local local) {
 	    SQLiteDatabase db = this.getWritableDatabase();
 
-	    // 2. delete
-	    db.delete("locales", //table name
-	                " id = ?",  // selections
-	                new String[] { String.valueOf(local.getId()) }); //selections args
+	    db.delete("locales", " id = ?", new String[] { String.valueOf(local.getId()) });
 
-	    // 3. close
 	    db.close();
-
-	    //log
-	    //Log.d("deleteBook", book.toString());
 	}
 	
 

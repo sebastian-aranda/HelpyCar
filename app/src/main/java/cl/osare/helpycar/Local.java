@@ -2,6 +2,9 @@ package cl.osare.helpycar;
 
 import com.google.android.gms.maps.model.Marker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Local{
 	
 	private int id;

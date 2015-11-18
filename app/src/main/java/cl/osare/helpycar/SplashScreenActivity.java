@@ -44,7 +44,7 @@ public class SplashScreenActivity extends Activity {
         setContentView(R.layout.splash_screen);
         
         if (isOnline()){
-        	new GetLocalTask().execute(new ApiConnector());
+        	new GetVersionTask().execute(new ApiConnector());
         }
         else{
         	AlertDialog dialog = setInternetDialog();

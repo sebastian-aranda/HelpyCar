@@ -205,8 +205,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	    return local;
 	}
 
-	public List<Local> getAllLocales() {
-		List<Local> locales = new LinkedList<Local>();
+	public ArrayList<Local> getAllLocales() {
+		ArrayList<Local> locales = new ArrayList<Local>();
 
 		String query = "SELECT  * FROM locales";
 
@@ -235,8 +235,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		return locales;
 	}
 
-	public List<Local> getLocalesByRubro(int rubro) {
-		List<Local> locales = new LinkedList<Local>();
+	public ArrayList<Local> getLocalesByRubro(int rubro) {
+		ArrayList<Local> locales = new ArrayList<Local>();
 
 		String query = "SELECT * FROM locales l INNER JOIN rubros_locales rl ON l.id = rl.id_local WHERE rl.id_rubro = "+String.valueOf(rubro);
 

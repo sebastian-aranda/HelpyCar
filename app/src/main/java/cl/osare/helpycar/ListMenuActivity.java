@@ -7,7 +7,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,9 +38,9 @@ public class ListMenuActivity extends Activity implements SearchView.OnQueryText
 	    //Codigo para retornar tipo correcto en base a la posicion del grid view
 	    Intent intent = getIntent();
 	    String extra = intent.getStringExtra(MenuActivity.STORE_TYPE);
-	    int extra_value = Integer.parseInt(extra);
+	    CURRENT_STORE = Integer.parseInt(extra);
 
-		locales = db.getLocalesByTipo(CURRENT_STORE);
+		locales = db.getLocalesByRubro(CURRENT_STORE);
 
 		localListView = (ListView) findViewById(R.id.listview);
 		localListAdapter = new ListAdapter(mContext, locales);

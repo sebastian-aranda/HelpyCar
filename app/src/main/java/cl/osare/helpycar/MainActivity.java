@@ -32,14 +32,17 @@ public class MainActivity extends Activity implements
 	
 	private static GoogleMap mMap;
 	private GPSTracker gps;
+
 	private List<Local> locales = new ArrayList<Local>();
-	
+	private int[] filtros = {1,2,3,4,5};
+
+	private static SQLiteHelper db;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		SQLiteHelper db = new SQLiteHelper(this);
+		db = new SQLiteHelper(this);
 		
 		//Setting buttons actions
 		setButtonsClickListeners();
@@ -140,7 +143,7 @@ public class MainActivity extends Activity implements
 		button_1.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				showStores(Configurations.TYPE_BENCINA);
+				showStores(filtros[0]);
 			}
 		});
 		
@@ -148,7 +151,7 @@ public class MainActivity extends Activity implements
 		button_2.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				showStores(Configurations.TYPE_LAVADO);
+				showStores(filtros[1]);
 			}
 		});
 		
@@ -156,7 +159,7 @@ public class MainActivity extends Activity implements
 		button_3.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				showStores(Configurations.TYPE_VULCANIZACION);
+				showStores(filtros[2]);
 			}
 		});
 		
@@ -164,7 +167,7 @@ public class MainActivity extends Activity implements
 		button_4.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				showStores(Configurations.TYPE_MECANICO);
+				showStores(filtros[3]);
 			}
 		});
 		
@@ -172,7 +175,7 @@ public class MainActivity extends Activity implements
 		button_5.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				showStores(Configurations.TYPE_ACCESORIOS);
+				showStores(filtros[4]);
 			}
 		});
 	}
@@ -183,10 +186,11 @@ public class MainActivity extends Activity implements
 		}
 	}
 	
-	public void showStores(int type){
+	public void showStores(int rubro){
+		List<Integer> id_locales = db.getLocalesRubro(rubro);
 		for (Local local : locales){
 			local.setMarkerVisible(false);
-			if (local.getTipo() == type){
+			if (id_locales.contains(local.getId())){
 				local.setMarkerVisible(true);
 			}
 		}

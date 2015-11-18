@@ -38,46 +38,10 @@ public class ListMenuActivity extends Activity implements SearchView.OnQueryText
 	    //Codigo para retornar tipo correcto en base a la posicion del grid view
 	    Intent intent = getIntent();
 	    String extra = intent.getStringExtra(MenuActivity.STORE_TYPE);
-	    
-	    /* Position -> Tipo
-	     * 0: Bencina -> 
-	     * 1: Lavado -> 2
-	     * 2: Accesorios ->
-	     * 3: Grua ->
-	     * 4: Mecanico ->
-	     * 5: Mecanico a domicilio ->
-	     * 6: Vulcanizacion -> 1
-	     */
 	    int extra_value = Integer.parseInt(extra);
-	    switch(extra_value){
-	    case 0:
-	    	CURRENT_STORE = Configurations.TYPE_BENCINA;
-	    	break;
-	    case 1:
-	    	CURRENT_STORE = Configurations.TYPE_LAVADO;
-	    	break;
-	    case 2:
-	    	CURRENT_STORE = Configurations.TYPE_ACCESORIOS;
-	    	break;
-	    case 3:
-	    	CURRENT_STORE = Configurations.TYPE_GRUA;
-	    	break;
-	    case 4:
-	    	CURRENT_STORE = Configurations.TYPE_MECANICO;
-	    	break;
-	    case 5:
-	    	CURRENT_STORE = Configurations.TYPE_MECANICO_ADOMICILIO;
-	    	break;
-	    case 6:
-	    	CURRENT_STORE = Configurations.TYPE_VULCANIZACION;
-	    	break;
-	    default:
-	    	CURRENT_STORE = 0;
-	    	break;
-	    }
-	    
-	    locales = db.getLocalesByTipo(CURRENT_STORE);
-	   
+
+		locales = db.getLocalesByTipo(CURRENT_STORE);
+
 		localListView = (ListView) findViewById(R.id.listview);
 		localListAdapter = new ListAdapter(mContext, locales);
 		

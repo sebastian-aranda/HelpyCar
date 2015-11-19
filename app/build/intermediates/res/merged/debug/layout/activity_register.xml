@@ -36,8 +36,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+    </LinearLayout>
 
 
 
-</LinearLayout>
-<!-- From: file:/D:/StudioProjects/HelpyCar/app/src/main/res/layout/activity_register.xml -->
+</LinearLayout><!-- From: file:/D:/StudioProjects/HelpyCar/app/src/main/res/layout/activity_register.xml -->

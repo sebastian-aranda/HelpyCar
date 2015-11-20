@@ -9,6 +9,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -17,11 +18,24 @@ import java.util.Calendar;
 public class RegisterActivity extends FragmentActivity {
     private static Context context;
 
+    private static EditText fechaNacimiento;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
         context = getApplicationContext();
+
+        fechaNacimiento = (EditText) findViewById(R.id.fechaNacimiento);
+    }
+
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    public void registrar(){
+        //codigo para registrar
     }
 
     public static class DatePickerFragment extends DialogFragment
@@ -40,14 +54,8 @@ public class RegisterActivity extends FragmentActivity {
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
-            Toast toast = Toast.makeText(context,String.valueOf(year)+"/"+String.valueOf(month)+"/"+String.valueOf(day), Toast.LENGTH_SHORT);
-            toast.show();
+            String fecha = String.valueOf(year)+"-"+String.valueOf(month)+"-"+String.valueOf(day);
+            fechaNacimiento.setText(fecha);
         }
     }
-
-    public void showDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
-    }
-
 }

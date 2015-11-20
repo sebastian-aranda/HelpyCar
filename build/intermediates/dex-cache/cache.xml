@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="8d736fefa22d896e84a268354b3ed48a42663150">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-e3f0d453dc383331ad55ba21c2e6bfc5297f5311.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\22.0.0\jars\libs\internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="ba3df4eb0a630d7de294f0e48d3f9267d279b784">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-a472dfcfb4c161e1870d790427d21b29d25c284d.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wallet\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="6836d188602ec5382d1967c58b00960eb8ff8773">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-48dffc81f10557a660dfbae71982794aad37f76a.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-nearby\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="6440e5e5cfe368f9bff3c537fb8988048069cb33">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-386f8dad707752548f6145e49dcfa282ef6cb15b.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="06a42becc33232ec0ee125161da68c1829c9f8fd">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-01a908829189aa0a5961002f7c50f598d203b981.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="02bac2dc792d78241077861566f2c82da955e7fa">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-ab492a324b341f4f50a611178258b5d1a827a195.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1e98ef3f124bb7a11f8575f9ff5dfea330b61b6f">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-7b2f3c1836883c16a6e8c9420fcd037f8c86fc8f.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\libs\internal_impl-22.2.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\internal_impl-22.2.0-0bec1208d247ea8d0a03c6606927f6dbfdd1ab0f.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-cast\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="8e3a972f28b8bae817e382257ba177a31bcadbbc">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-9285687150227c1276e24e95da7f2d15a467924c.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-fitness\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a172852a35ff919e85b9b7f14bbc15c5bee25520">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-0c3780eeca2cd617f3b436778cf6c8e7a48d6af0.jar" />
+    </item>
+    <item
+        jar="D:\Programacion\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.0\support-annotations-22.2.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\support-annotations-22.2.0-31bc4cf5cbbe8748bd8bdb93651a880987f0140c.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-528ec1c2609616ecd30d88d56451d741cee1b550.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-identity\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="d405025c600055237c171a0bbabaa49d69696573">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-36583a9dde204931960005032ffb18118713dd0e.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="f02127a85abd52a2cd526d4c2409f21969f80ee8">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-ada65a56999c235c09424a6f2e4a9674087c22f2.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appstate\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="68c140702c7242d914655bcb3164d9e8c45b84cb">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-e9e5e4782133efbe6b01e1858c0c967dde1dafec.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-analytics\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e7b35244f50663b3f8d150714bca9ecd7a290da1">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-9dd43f841a617df6193dec9e2b85824f810076e8.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-safetynet\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1a6411087ab88ce5542f593e63a2752b6b0d6f1a">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-eae71aee1c62b9f2e8cd4d57a0604a10913da40a.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="272bc5d7063f24bc3a33ea1d318cde8f31f5ec4c">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-575e70d8cb45f49ef27ee7e37162547e52c652a4.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\22.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a1372c17fccacca753d3951d3ad820571cbce075">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-e1e8212f91d523ec1cd4df38777c5b6252b65721.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="29ebc7e04d877062317c8cc0e68b20f0c1fcda66">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-260dcb781739aabc8def440916f02c11103c8444.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appinvite\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="63ec6e9f4fe5482a7447d0f3091b8e543a02554c">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-f6349c7fe2020fc805bd09ba57fe112f7869fcaa.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-a494b23286d7fdd3634a8d9eafe488f01d2d5204.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wearable\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="69dd177337ead693c408c8dddc9546bb6f1244fa">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-530ebf80b6c5d0167b6bfc85b6d736f64619d674.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a78183f30e769a98ab4820794f597763088d3065">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-67b96fc305f1d656d3cca34bbf9d05913265135d.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="f44d03c138cb6488fdbaa65e3a7e5878861a56d8">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-2ec8c5d479e4b506ab57856d25c5f32796eed2a1.jar" />
+    </item>
+    <item
+        jar="D:\StudioProjects\HelpyCar\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-panorama\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="ba207be21987c11b37d9f8faa08ed6e722569f30">
+        <dex dex="D:\StudioProjects\HelpyCar\app\build\intermediates\pre-dexed\debug\classes-358ea7cf0e95f0483727718ece8c3d22a3abce6e.jar" />
+    </item>
+
+</items>

@@ -11,5 +11,10 @@
         android:contentDescription="@string/app_name"
         android:scaleType="fitXY"
         android:src="@drawable/splash_screen" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true" />
  
 </RelativeLayout><!-- From: file:/D:/StudioProjects/HelpyCar/app/src/main/res/layout/splash_screen.xml -->

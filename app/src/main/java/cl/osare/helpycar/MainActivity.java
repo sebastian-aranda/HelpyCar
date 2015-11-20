@@ -8,6 +8,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -127,12 +128,13 @@ public class MainActivity extends Activity implements
 	    	String[] splits = local.getLocalizacion().split(",");
             double latitude = Double.parseDouble(splits[0]);
             double longitude = Double.parseDouble(splits[1]);
-            
+
+			//verificar premium
             Marker marker = mMap.addMarker(new MarkerOptions()
             	.position(new LatLng(latitude, longitude))
             	.title(local.getNombre())
-            	.flat(false)
-            );
+				.icon(BitmapDescriptorFactory.fromResource(R.drawable.grua_menu))
+			);
             
             local.setMarker(marker);
 	    }

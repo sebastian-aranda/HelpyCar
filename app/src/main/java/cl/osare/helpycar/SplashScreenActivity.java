@@ -29,8 +29,12 @@ public class SplashScreenActivity extends Activity {
 
   	@Override
   	protected void onResume() {
-  		AlertDialog dialog = setInternetDialog();
+  		super.onResume();
   	}
+
+	/*protected void onResume() {
+		AlertDialog dialog = setInternetDialog();
+	*/
   	
   	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +48,8 @@ public class SplashScreenActivity extends Activity {
         setContentView(R.layout.splash_screen);
         
         if (isOnline()){
-        	new GetVersionTask().execute(new ApiConnector());
+        	//new GetVersionTask().execute(new ApiConnector());
+			openRegisterActivity();
         }
         else{
         	AlertDialog dialog = setInternetDialog();
@@ -194,10 +199,16 @@ public class SplashScreenActivity extends Activity {
     }
     
     private void openMainActivity(){
-    	Intent mainIntent = new Intent().setClass(SplashScreenActivity.this, MainActivity.class);
-        startActivity(mainIntent);
+    	Intent intent= new Intent().setClass(SplashScreenActivity.this, MainActivity.class);
+        startActivity(intent);
         finish();
     }
+
+	private void openRegisterActivity(){
+		Intent intent = new Intent().setClass(SplashScreenActivity.this, RegisterActivity.class);
+		startActivity(intent);
+		finish();
+	}
     
     private AlertDialog setInternetDialog(){
     	AlertDialog alert_dialog = new AlertDialog.Builder(this)

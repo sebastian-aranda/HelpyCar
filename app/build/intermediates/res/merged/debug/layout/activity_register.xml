@@ -137,6 +137,10 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enviar"
+        android:onClick="registrar" />
 
 </LinearLayout><!-- From: file:/D:/StudioProjects/HelpyCar/app/src/main/res/layout/activity_register.xml -->

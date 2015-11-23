@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -35,7 +36,13 @@ public class RegisterActivity extends FragmentActivity {
     }
 
     public void registrar(){
-        //codigo para registrar
+        openMainActivity();
+    }
+
+    private void openMainActivity(){
+        Intent intent= new Intent().setClass(RegisterActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public static class DatePickerFragment extends DialogFragment

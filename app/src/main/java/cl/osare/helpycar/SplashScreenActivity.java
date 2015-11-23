@@ -48,8 +48,8 @@ public class SplashScreenActivity extends Activity {
         setContentView(R.layout.splash_screen);
         
         if (isOnline()){
-        	//new GetVersionTask().execute(new ApiConnector());
-			openRegisterActivity();
+        	new GetVersionTask().execute(new ApiConnector());
+			//openRegisterActivity();
         }
         else{
         	AlertDialog dialog = setInternetDialog();
@@ -88,7 +88,6 @@ public class SplashScreenActivity extends Activity {
 		protected void onPostExecute(JSONArray jsonArray) {
 			loadRubrosLocalesDB(jsonArray, db);
 			new GetCalificacionesTask().execute(new ApiConnector());
-			//openMainActivity();
 		}
 	}
     
@@ -96,7 +95,7 @@ public class SplashScreenActivity extends Activity {
     	
 		@Override
         protected JSONArray doInBackground(ApiConnector... params) {
-            return params[0].getAllData(url_get+"?calificacion=1");
+            return params[0].getAllData(url_get+"?calificaciones=1");
         }
 
         @Override
@@ -117,14 +116,14 @@ public class SplashScreenActivity extends Activity {
 		}
 		else{
 			versionInternal = 0;
-			comentarioInternal = "";
+			comentarioInternal = "Sin base de datos";
 		}
 
 		int versionExternal = versionInternal;
 		String comentarioExternal = comentarioInternal;
 		try {
-			versionExternal = jsonArray.getJSONObject(0).getInt("version_id");
-			comentarioExternal = jsonArray.getJSONObject(0).getString("version_comentario");
+			versionExternal = jsonArray.getJSONObject(0).getInt("id");
+			comentarioExternal = jsonArray.getJSONObject(0).getString("comentario");
 		} catch (JSONException e1) {
 			e1.printStackTrace();
 		}

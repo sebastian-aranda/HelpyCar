@@ -52,9 +52,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
 	//Reload Configurations
 	public void reloadLocales(SQLiteDatabase db){
-		db.execSQL("DROP TABLE IF EXISTS locales");
+		db.execSQL("DROP TABLE IF EXISTS local");
 
-		String sql = "CREATE TABLE locales ( " +
+		String sql = "CREATE TABLE local ( " +
 				"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				"nombre TEXT, "+
 				"localizacion TEXT, "+
@@ -71,10 +71,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	}
 
 	public void reloadRubrosLocales(SQLiteDatabase db){
-		db.execSQL("DROP TABLE IF EXISTS rubros_locales");
+		db.execSQL("DROP TABLE IF EXISTS rubro_local");
 
 
-		String sql = "CREATE TABLE rubros_locales(" +
+		String sql = "CREATE TABLE rubro_local(" +
 				"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				"id_local INTEGER, " +
 				"id_rubro INTEGER )";
@@ -83,10 +83,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	}
 
 	public void reloadCalificaciones(SQLiteDatabase db){
-		db.execSQL("DROP TABLE IF EXISTS calificaciones");
+		db.execSQL("DROP TABLE IF EXISTS calificacion");
 		
 
-		String sql = "CREATE TABLE calificaciones (" +
+		String sql = "CREATE TABLE calificacion (" +
         		"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
         		"dispositivo TEXT, " +
         		"id_local INTEGER, " +
@@ -121,7 +121,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		values.put("descripcion", local.getDescripcion());
 		values.put("premium", local.getPremium());
 
-		db.insert("locales", null, values);
+		db.insert("local", null, values);
 
 		db.close();
 	}
@@ -135,7 +135,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		values.put("id_local", id_local);
 		values.put("nota", nota);
 
-		db.insert("calificaciones", null, values);
+		db.insert("calificacion", null, values);
 
 		db.close();
 	}
@@ -148,7 +148,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		values.put("id_local", id_local);
 		values.put("id_rubro", id_rubro);
 
-		db.insert("rubros_locales", null, values);
+		db.insert("rubro_local", null, values);
 
 		db.close();
 	}
@@ -162,7 +162,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		values.put("id_local", id_local);
 		values.put("nota", nota);
 
-		db.insert("calificaciones", null, values);
+		db.insert("calificacion", null, values);
 
 		db.close();
 	}
@@ -183,7 +183,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public Local getLocal(int id){
 	    SQLiteDatabase db = this.getReadableDatabase();
 
-		String query = "SELECT * FROM locales WHERE id = "+String.valueOf(id);
+		String query = "SELECT * FROM local WHERE id = "+String.valueOf(id);
 		Cursor cursor = db.rawQuery(query, null);
 
 	    if (cursor != null)
@@ -208,7 +208,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public ArrayList<Local> getAllLocales() {
 		ArrayList<Local> locales = new ArrayList<Local>();
 
-		String query = "SELECT  * FROM locales";
+		String query = "SELECT  * FROM local";
 
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(query, null);
@@ -238,7 +238,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public ArrayList<Local> getLocalesByRubro(int rubro) {
 		ArrayList<Local> locales = new ArrayList<Local>();
 
-		String query = "SELECT * FROM locales l INNER JOIN rubros_locales rl ON l.id = rl.id_local WHERE rl.id_rubro = "+String.valueOf(rubro);
+		String query = "SELECT * FROM local l INNER JOIN rubro_local rl ON l.id = rl.id_local WHERE rl.id_rubro = "+String.valueOf(rubro);
 
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(query, null);
@@ -268,7 +268,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public ArrayList<Integer> getRubrosLocal(int local){
 		ArrayList<Integer> rubros = new ArrayList<Integer>();
 		
-		String query = "SELECT id_rubro FROM rubros_locales WHERE id_local = "+String.valueOf(local);
+		String query = "SELECT id_rubro FROM rubro_local WHERE id_local = "+String.valueOf(local);
 		
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(query, null);
@@ -285,7 +285,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public ArrayList<Integer> getLocalesRubro(int id_rubro){
 		ArrayList<Integer> locales = new ArrayList<Integer>();
 
-		String query = "SELECT id_local FROM rubros_locales WHERE id_rubro = "+String.valueOf(id_rubro);
+		String query = "SELECT id_local FROM rubro_local WHERE id_rubro = "+String.valueOf(id_rubro);
 
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(query, null);
@@ -300,7 +300,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	}
 	
 	public int getCalificacion(int id_local){
-		String query = "SELECT * FROM calificaciones WHERE id_local = ?";
+		String query = "SELECT * FROM calificacion WHERE id_local = ?";
 		
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(query, new String[] {String.valueOf(id_local)});
@@ -323,7 +323,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	}
 	
 	public int getCalificacionByDispositivo(String dispositivo, int id_local) {
-		String query = "SELECT * FROM calificaciones WHERE dispositivo = ? AND id_local = ?";
+		String query = "SELECT * FROM calificacion WHERE dispositivo = ? AND id_local = ?";
 
 		SQLiteDatabase db = this.getReadableDatabase();
 	    Cursor cursor = db.rawQuery(query, new String[] { dispositivo, String.valueOf(id_local) });
@@ -341,10 +341,18 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(query, null);
 
-		if (cursor != null)
-			cursor.moveToFirst();
+		String[] version = new String[2];
+		if (cursor != null){
+			try{
+				cursor.moveToFirst();
+				version[0] = cursor.getString(0);
+				version[1] = cursor.getString(1);
+			} catch (IndexOutOfBoundsException e){
+				version[0] = "0";
+				version[1] = "Sin registros";
+			}
+		}
 
-		String[] version = {cursor.getString(0), cursor.getString(1)};
 		return version;
 	}
 
@@ -364,7 +372,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		values.put("descripcion", local.getDescripcion());
 		values.put("premium", local.getPremium());
 
-		int i = db.update("locales", values, " id = ?", new String[] { String.valueOf(local.getId()) });
+		int i = db.update("local", values, " id = ?", new String[] { String.valueOf(local.getId()) });
 
 		db.close();
 		return i;
@@ -376,7 +384,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	    ContentValues values = new ContentValues();
 	    values.put("nota", nota);
 
-	    int i = db.update("calificaciones", values, " dispositivo = ? AND id_local = ?", new String[]{dispositivo, String.valueOf(id_local)});
+	    int i = db.update("calificacion", values, " dispositivo = ? AND id_local = ?", new String[]{dispositivo, String.valueOf(id_local)});
 
 	    db.close();
 	    return i;
@@ -386,14 +394,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public void deleteLocal(Local local) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
-		db.delete("locales", " id = ?", new String[] { String.valueOf(local.getId()) });
+		db.delete("local", " id = ?", new String[] { String.valueOf(local.getId()) });
 
 		db.close();
 	}
 
 	//Other SQL Querys
 	public int countLocales(){
-		String query = "SELECT  COUNT(*) AS count FROM locales";
+		String query = "SELECT  COUNT(*) AS count FROM local";
 	    SQLiteDatabase db = this.getReadableDatabase();
 	    Cursor cursor = db.rawQuery(query, null);
 	    

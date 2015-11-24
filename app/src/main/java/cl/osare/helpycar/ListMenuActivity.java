@@ -8,17 +8,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SearchView;
 
-public class ListMenuActivity extends Activity implements SearchView.OnQueryTextListener{
+public class ListMenuActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 	
 	public final static String STORE_TYPE = "cl.osare.helpycar.list.STORE_TYPE";
-	private static int CURRENT_STORE;
+	private static int CURRENT_STORE_TYPE;
 	
 	private final Context mContext = this;
 	
@@ -32,19 +35,20 @@ public class ListMenuActivity extends Activity implements SearchView.OnQueryText
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_list);
+
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
 	    
 	    SQLiteHelper db = new SQLiteHelper(this);
 	    
 	    //Codigo para retornar tipo correcto en base a la posicion del grid view
 	    Intent intent = getIntent();
-	    String extra = intent.getStringExtra(MenuActivity.STORE_TYPE);
-	    CURRENT_STORE = Integer.parseInt(extra);
+	    CURRENT_STORE_TYPE = intent.getIntExtra(MenuActivity.STORE_TYPE, 0);
 
-		locales = db.getLocalesByRubro(CURRENT_STORE);
+		locales = db.getLocalesByRubro(CURRENT_STORE_TYPE);
 
 		localListView = (ListView) findViewById(R.id.listview);
 		localListAdapter = new ListAdapter(mContext, locales);
-		
 		localListView.setAdapter(localListAdapter);
 		localListView.setTextFilterEnabled(false);
 		
@@ -64,12 +68,11 @@ public class ListMenuActivity extends Activity implements SearchView.OnQueryText
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 		searchMenuItem = menu.findItem(R.id.search);
 		searchView = (SearchView) searchMenuItem.getActionView();
-
 		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 		searchView.setSubmitButtonEnabled(false);
 		searchView.setOnQueryTextListener(this);
 	    
-		return true;
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
@@ -81,7 +84,7 @@ public class ListMenuActivity extends Activity implements SearchView.OnQueryText
 		}
 		
 		else if (id == R.id.location) {
-			openMap(Integer.toString(CURRENT_STORE));
+			openMap(Integer.toString(CURRENT_STORE_TYPE));
 		}
 		
 		return super.onOptionsItemSelected(item);
@@ -110,7 +113,6 @@ public class ListMenuActivity extends Activity implements SearchView.OnQueryText
 
 	@Override
 	public boolean onQueryTextSubmit(String query) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

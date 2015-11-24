@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/gridview"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:numColumns="3"
-	android:layout_marginTop="15dp"
-    android:stretchMode="columnWidth"
-    android:gravity="center" >
-    
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
 
-</GridView>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <GridView android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3"
+        android:layout_marginTop="15dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"/>
+
+</LinearLayout>
+
 <!-- From: file:/D:/StudioProjects/HelpyCar/app/src/main/res/layout/activity_menu.xml -->

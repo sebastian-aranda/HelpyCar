@@ -49,7 +49,6 @@ public class SplashScreenActivity extends Activity {
         
         if (isOnline()){
         	new GetVersionTask().execute(new ApiConnector());
-			//openRegisterActivity();
         }
         else{
         	AlertDialog dialog = setInternetDialog();
@@ -101,7 +100,8 @@ public class SplashScreenActivity extends Activity {
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
             loadCalificacionesDB(jsonArray, db);
-            openMainActivity();
+            //openMainActivity();
+			openRegisterActivity();
         }
     }
 

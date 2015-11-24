@@ -278,6 +278,8 @@
     <string name="accept">Accept</string>
     <!-- From: file:/D:/StudioProjects/HelpyCar/app/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="action_menu_1">Menu Normal</string>
+    <string name="action_menu_2">Menu Emergencias</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="app_name">HelpyCar</string>
@@ -287,6 +289,7 @@
     <string name="auth_google_play_services_client_google_display_name">Google</string>
     <!-- From: file:/D:/StudioProjects/HelpyCar/app/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="button_report">Reportar local</string>
     <string name="callingButton">Llamar</string>
     <!-- From: file:/D:/StudioProjects/HelpyCar/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.5.0/res/values/cast_strings.xml -->
     <eat-comment/>
@@ -348,7 +351,6 @@
     <string name="location">Ver en Mapa</string>
     <string name="mailTitle">Mail:</string>
     <string name="mapButton">Mapa</string>
-    <string name="menu_activity">Menu</string>
     <!-- From: file:/D:/StudioProjects/HelpyCar/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <string name="mr_media_route_button_content_description">Cast</string>

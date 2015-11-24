@@ -16,9 +16,12 @@
     <string name="mapButton">Mapa</string>
     <string name="localDescriptionTitle">Descripción:</string>
     <string name="ratingTittle">Califica este local:</string>
+    <string name="button_report">Reportar local</string>
+
     
     <!-- Action Bar Strings -->
-    <string name="menu_activity">Menu</string>
+    <string name="action_menu_1">Menu Normal</string>
+    <string name="action_menu_2">Menu Emergencias</string>
     <string name="listMenu_activity">List Menu</string>
     <string name="location">Ver en Mapa</string>
     <string name="search_hint">Buscar</string>

@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+	xmlns:map="http://schemas.android.com/apk/res-auto"
+	xmlns:app="http://schemas.android.com/tools"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+
+	<android.support.v7.widget.Toolbar
+		android:id="@+id/toolbar"
+		android:layout_width="match_parent"
+		android:layout_height="?attr/actionBarSize"
+		android:background="?attr/colorPrimary"
+		android:elevation="4dp"
+		android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+		app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
     
 	<fragment
 		android:id="@+id/map"
@@ -30,35 +40,35 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".2"
-            android:src="@drawable/bencina" />
+            android:src="@drawable/filter_1" />
 
 	    <ImageButton
 	        android:id="@+id/b2"
 	        android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".2"
-	        android:src="@drawable/lavado" />
+	        android:src="@drawable/filter_2" />
 	    
 	    <ImageButton
 	        android:id="@+id/b3"
 	        android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".2"
-	        android:src="@drawable/vulcanizacion" />
+	        android:src="@drawable/filter_3" />
 	    
 	    <ImageButton
 	        android:id="@+id/b4"
 	        android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".2"
-	        android:src="@drawable/mecanico" />
+	        android:src="@drawable/filter_4" />
 	    
 	    <ImageButton
 	        android:id="@+id/b5"
 	       	android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".2"
-	        android:src="@drawable/carro" />
+	        android:src="@drawable/filter_5" />
 	    
     </LinearLayout>
 

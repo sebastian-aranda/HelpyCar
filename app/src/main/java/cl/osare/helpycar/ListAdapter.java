@@ -16,13 +16,13 @@ public class ListAdapter extends BaseAdapter implements Filterable{
 	private final Context context;
 	
 	private LocalFilter localFilter;
-	private ArrayList<Local> localList;
+	private ArrayList<Local> originalList;
 	private ArrayList<Local> filteredList;
 	
 
 	public ListAdapter(Context context, ArrayList<Local> locales) {
 		this.context = context;
-		this.localList = locales;
+		this.originalList = locales;
 		this.filteredList = locales;
 	    
 	}
@@ -38,15 +38,13 @@ public class ListAdapter extends BaseAdapter implements Filterable{
 	}
 	
 	@Override
-	public long getItemId(int i) {
-		return i;
-	}
+	public long getItemId(int i) { return i; }
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View listView = convertView;
 		final ViewHolder holder;
-		Local local = (Local) getItem(position);
+		Local local = getItem(position);
 		
 		if (listView == null){
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -71,31 +69,23 @@ public class ListAdapter extends BaseAdapter implements Filterable{
 		
 		return listView;
 	}
-	
-	@Override
-	public Filter getFilter() {
-		if (localFilter == null) {
-			localFilter = new LocalFilter();
-		}
-		
-		return localFilter;
-	}
-	
-	/**
-     * Keep reference to children view to avoid unnecessary calls
-     */
+
     static class ViewHolder {
         TextView cliente;
         TextView direccion;
         TextView telefono;
         TextView horario;
-        
     }
 
-    /**
-     * Custom filter for friend list
-     * Filter content in friend list according to the search text
-     */
+	@Override
+	public Filter getFilter() {
+		if (localFilter == null) {
+			localFilter = new LocalFilter();
+		}
+
+		return localFilter;
+	}
+
 	private class LocalFilter extends Filter {
 
         @Override
@@ -104,28 +94,23 @@ public class ListAdapter extends BaseAdapter implements Filterable{
             if (constraint!=null && constraint.length()>0) {
                 ArrayList<Local> tempList = new ArrayList<Local>();
 
-                // search content in friend list
-                for (Local user : localList) {
-                    if (user.getNombre().toLowerCase().contains(constraint.toString().toLowerCase())) {
-                        tempList.add(user);
+                for (Local local : originalList) {
+                    if (local.getNombre().toLowerCase().contains(constraint.toString().toLowerCase())) {
+                        tempList.add(local);
                     }
                 }
 
                 filterResults.count = tempList.size();
                 filterResults.values = tempList;
-            } else {
-                filterResults.count = localList.size();
-                filterResults.values = localList;
+            }
+			else {
+                filterResults.count = originalList.size();
+                filterResults.values = originalList;
             }
 
             return filterResults;
         }
 
-        /**
-         * Notify about filtered list to ui
-         * @param constraint text
-         * @param results filtered result
-         */
         @SuppressWarnings("unchecked")
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {

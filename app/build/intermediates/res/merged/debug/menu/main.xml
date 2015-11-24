@@ -1,12 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="cl.osare.helpycar.MainActivity" >
-	
-    <item android:id="@+id/menu_activity"
-        android:title="@string/search_title"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/action_menu_1"
         android:icon="@drawable/ic_apps_white_24dp"
-	    android:showAsAction="ifRoom|collapseActionView"/>
+        android:title="@string/action_menu_1"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/action_menu_2"
+        android:icon="@drawable/ic_apps_white_24dp"
+        android:title="@string/action_menu_2"
+        app:showAsAction="ifRoom"/>
 
 </menu>
 <!-- From: file:/D:/StudioProjects/HelpyCar/app/src/main/res/menu/main.xml -->

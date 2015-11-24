@@ -13,23 +13,25 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import android.support.v7.app.ActionBarActivity;
-import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 
 
-public class MainActivity extends Activity implements 
+public class MainActivity extends AppCompatActivity implements
 	OnInfoWindowClickListener,
 	OnMarkerClickListener{
 	
 	public final static String LOCAL_ID = "cl.osare.helpycar.LOCAL_ID";
+	public final static String RUBRO_CLASS = "cl.osare.helpycar.RUBRO_CLASS";
 	
 	private static GoogleMap mMap;
 	private GPSTracker gps;
@@ -42,7 +44,10 @@ public class MainActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+
 		db = new SQLiteHelper(this);
 		
 		//Setting buttons actions
@@ -51,7 +56,7 @@ public class MainActivity extends Activity implements
 		//Map Section
 		mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();	
 		mMap.setMyLocationEnabled(true);
-		mMap.setPadding(0, 0, 0, 90);
+		mMap.setPadding(0, 160, 0, 160);
 		
 		mMap.setOnInfoWindowClickListener(this);
 		mMap.setOnMarkerClickListener(this);
@@ -63,11 +68,11 @@ public class MainActivity extends Activity implements
 	    //Camera Initialization
 	    if (location != null){
 		    LatLng coordinates = new LatLng(gps.getLatitude(), gps.getLongitude());
-		    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 13));
+		    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 15));
 	    }
 	    else{
 	    	LatLng coordinates = new LatLng(-33.437130, -70.634200); //Coordenados de Plaza Italia
-	    	mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 13));
+	    	mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 15));
 	    }
 	    
 	    locales = db.getAllLocales();
@@ -87,6 +92,29 @@ public class MainActivity extends Activity implements
 	    }
 	  
 	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.action_menu_1:
+				openMenuActivity(1);
+				return true;
+
+			case R.id.action_menu_2:
+				openMenuActivity(2);
+				return true;
+
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
 	
 	public void showStoreById(int id){
 		for (Local local : locales){
@@ -103,26 +131,6 @@ public class MainActivity extends Activity implements
 		}
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.menu_activity) {
-			Intent intent = new Intent(this, MenuActivity.class);
-			startActivity(intent);
-		}
-		return super.onOptionsItemSelected(item);
-	}
-	
 	public void setMarkers(List<Local> locales) {
 		for (Local local : locales){
 	    	String[] splits = local.getLocalizacion().split(",");
@@ -133,7 +141,8 @@ public class MainActivity extends Activity implements
             Marker marker = mMap.addMarker(new MarkerOptions()
             	.position(new LatLng(latitude, longitude))
             	.title(local.getNombre())
-				.icon(BitmapDescriptorFactory.fromResource(R.drawable.grua_menu))
+				//.icon(BitmapDescriptorFactory.fromResource(R.drawable.grua_menu)
+							.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
 			);
             
             local.setMarker(marker);
@@ -200,7 +209,6 @@ public class MainActivity extends Activity implements
 
 	@Override
 	public boolean onMarkerClick(Marker marker) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -217,6 +225,12 @@ public class MainActivity extends Activity implements
 		intent.putExtra(LOCAL_ID,String.valueOf(id));
 		startActivity(intent);
 	}
-	
+
+	private void openMenuActivity(int extra){
+		Intent intent= new Intent().setClass(MainActivity.this, MenuActivity.class);
+		intent.putExtra(RUBRO_CLASS,extra);
+		startActivity(intent);
+		//finish();
+	}
 	
 }

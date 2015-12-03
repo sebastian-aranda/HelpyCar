@@ -2,7 +2,6 @@ package cl.osare.helpycar;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +16,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 public class ListMenuActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 	
@@ -40,8 +42,8 @@ public class ListMenuActivity extends AppCompatActivity implements SearchView.On
 		setSupportActionBar(toolbar);
 	    
 	    SQLiteHelper db = new SQLiteHelper(this);
-	    
-	    //Codigo para retornar tipo correcto en base a la posicion del grid view
+
+		//Codigo para retornar tipo correcto en base a la posicion del grid view
 	    Intent intent = getIntent();
 	    CURRENT_STORE_TYPE = intent.getIntExtra(MenuActivity.STORE_TYPE, 0);
 

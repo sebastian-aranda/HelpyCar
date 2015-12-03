@@ -31,17 +31,21 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 public class LocalActivity extends AppCompatActivity {
 	
@@ -49,25 +53,35 @@ public class LocalActivity extends AppCompatActivity {
 	private static final String url_get = Configurations.SERVER_GET;
 	private static SQLiteHelper db;
 	private static String macAddress;
-	
-	//TextViews
-	private TextView name;
-	private TextView address;
-	private TextView phone_number;
-	private TextView horarioText;
-	private TextView mailText;
-	private TextView localDescriptionText;
-	private RatingBar rateBar;
-
-	private LinearLayout ofertasLayout;
-	private ArrayList<Oferta> ofertas;
-	
 	private Local local;
+
+	//Views
+	private ProgressBar loadingLogo;
+	private ImageView logo;
+
+	private TextView nombre;
+	private TextView direccion;
+
+	private TextView horario;
+	private TextView mail;
+	private TextView telefono;
+
+	private RatingBar rateBar;
 	private int promedio = 0;
 	private int myCalification = 0;
 
+	private LinearLayout ofertasLayout;
+	private ArrayList<Oferta> ofertas;
+
+	private TextView descripcion;
+
+	private ProgressBar loadingPhoto;
+	private ImageView photo;
+
 	private String denuncia;
-	
+
+	private InterstitialAd interstitial;
+
 	public final static String STORE_ID_EXTRA = "cl.osare.helpycar.local.STORE_ID";
 	
 	@Override
@@ -77,24 +91,42 @@ public class LocalActivity extends AppCompatActivity {
 
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
-		
+
 		db = new SQLiteHelper(this);
 		macAddress = getMacAddress();
-		
-		this.name = (TextView)findViewById(R.id.name);
-		this.address = (TextView)findViewById(R.id.address);
-		this.horarioText = (TextView)findViewById(R.id.horarioText);
-		this.mailText = (TextView)findViewById(R.id.mailText);
-		this.phone_number = (TextView)findViewById(R.id.phone_numberText);
-		this.localDescriptionText = (TextView)findViewById(R.id.localDescriptionText);
-		this.rateBar = (RatingBar)findViewById(R.id.ratingBar);
-		
+
+		interstitial = new InterstitialAd(this);
+		interstitial.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
+
+		AdRequest adRequest = new AdRequest.Builder()
+				.addTestDevice("EF5124893544330E953A1E369725D2D4")
+				.build();
+
+		interstitial.loadAd(adRequest);
+
 		Intent intent = getIntent();
 		String id = intent.getStringExtra(MainActivity.LOCAL_ID);
-		
 		this.local = db.getLocal(Integer.parseInt(id));
+
+		this.loadingLogo = (ProgressBar)findViewById(R.id.loadingLogo);
+		this.logo = (ImageView)findViewById(R.id.logo);
+		new DownloadImageTask(getApplicationContext(), loadingLogo, logo, 96, 96).execute(Configurations.SERVER_LOGOS+local.getLogo());
+
+		this.loadingPhoto = (ProgressBar)findViewById(R.id.loadingPhoto);
+		this.photo = (ImageView)findViewById(R.id.photo);
+		new DownloadImageTask(getApplicationContext(), loadingPhoto, photo, 96, 240).execute(Configurations.SERVER_PHOTOS+local.getPhoto());
+
+		this.nombre = (TextView)findViewById(R.id.name);
+		this.direccion = (TextView)findViewById(R.id.address);
+		this.horario = (TextView)findViewById(R.id.horarioText);
+		this.mail = (TextView)findViewById(R.id.mailText);
+		this.telefono = (TextView)findViewById(R.id.phone_numberText);
+
+		this.rateBar = (RatingBar)findViewById(R.id.ratingBar);
 		this.promedio = db.getCalificacion(local.getId());
 		this.myCalification = db.getCalificacionByDispositivo(macAddress, local.getId());
+
+		this.descripcion = (TextView)findViewById(R.id.localDescriptionText);
 
 		ofertasLayout = (LinearLayout) findViewById(R.id.ofertas);
 		ofertas = new ArrayList<Oferta>();
@@ -133,9 +165,12 @@ public class LocalActivity extends AppCompatActivity {
 		callingButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent callIntent = new Intent(Intent.ACTION_CALL);
+				/*Intent callIntent = new Intent(Intent.ACTION_CALL);
 				callIntent.setData(Uri.parse("tel:" + local.getTelefono()));
-				startActivity(callIntent);
+				startActivity(callIntent);*/
+				if (interstitial.isLoaded()) {
+					interstitial.show();
+				}
 			}
 		});
 		
@@ -214,12 +249,12 @@ public class LocalActivity extends AppCompatActivity {
     }
 	
 	public void setValues(Local local) {
-        this.name.setText(local.getNombre());
-        this.address.setText(local.getDireccion());
-        this.horarioText.setText(local.getHorario());
-        this.mailText.setText(local.getMail());
-        this.phone_number.setText(local.getTelefono());
-        this.localDescriptionText.setText(local.getDescripcion());
+        this.nombre.setText(local.getNombre());
+        this.direccion.setText(local.getDireccion());
+        this.horario.setText(local.getHorario());
+        this.mail.setText(local.getMail());
+        this.telefono.setText(local.getTelefono());
+        this.descripcion.setText(local.getDescripcion());
         this.rateBar.setRating(promedio);
     }
 	
@@ -298,14 +333,17 @@ public class LocalActivity extends AppCompatActivity {
 		}
 
 		protected void onPostExecute(JSONArray jsonArray) {
-			loadOfertas(jsonArray);
-			OfferAdapter offerAdapter = new OfferAdapter(getApplicationContext(),ofertas);
+			if (jsonArray != null){
+				loadOfertas(jsonArray);
+				OfferAdapter offerAdapter = new OfferAdapter(getApplicationContext(),ofertas);
 
-			int count = offerAdapter.getCount();
-			for (int i=0;i<count;i++){
-				View item = offerAdapter.getView(i, null, null);
-				ofertasLayout.addView(item);
+				int count = offerAdapter.getCount();
+				for (int i=0;i<count;i++){
+					View item = offerAdapter.getView(i, null, null);
+					ofertasLayout.addView(item);
+				}
 			}
+
 		}
 	}
 

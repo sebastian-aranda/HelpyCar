@@ -99,7 +99,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cl.osare.helpycar.MainActivity" />
         </activity>
-        <!-- Include the AdActivity and InAppPurchaseActivity configChanges and themes. -->
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"

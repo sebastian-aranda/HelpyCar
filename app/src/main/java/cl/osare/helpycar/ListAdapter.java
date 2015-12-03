@@ -3,12 +3,16 @@ package cl.osare.helpycar;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class ListAdapter extends BaseAdapter implements Filterable{
@@ -45,23 +49,22 @@ public class ListAdapter extends BaseAdapter implements Filterable{
 		View listView = convertView;
 		final ViewHolder holder;
 		Local local = getItem(position);
-		
-		if (listView == null){
-			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			listView = inflater.inflate(R.layout.list_item, null);
+
+		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		listView = inflater.inflate(R.layout.list_item, null);
 			
-			holder = new ViewHolder();
-			holder.cliente = (TextView) listView.findViewById(R.id.cliente);
-			holder.direccion = (TextView) listView.findViewById(R.id.direccion);
-			holder.telefono = (TextView) listView.findViewById(R.id.telefono);
-			holder.horario = (TextView) listView.findViewById(R.id.horario);
-			
-			listView.setTag(holder);
-		}
-		else{
-			holder = (ViewHolder) listView.getTag();
-		}
-		
+		holder = new ViewHolder();
+		holder.localPremium = local.getPremium();
+		holder.logo = (ImageView) listView.findViewById(R.id.logo);
+		holder.loadingLogo = (ProgressBar) listView.findViewById(R.id.loadingLogo);
+		holder.cliente = (TextView) listView.findViewById(R.id.cliente);
+		holder.direccion = (TextView) listView.findViewById(R.id.direccion);
+		holder.telefono = (TextView) listView.findViewById(R.id.telefono);
+		holder.horario = (TextView) listView.findViewById(R.id.horario);
+
+		listView.setTag(holder);
+
+		new DownloadImageTask(context, holder.loadingLogo, holder.logo, 80, 80).execute(Configurations.SERVER_LOGOS+local.getLogo());
 		holder.cliente.setText(local.getNombre());
 		holder.direccion.setText(local.getDireccion());
 		holder.telefono.setText(local.getTelefono());
@@ -71,6 +74,9 @@ public class ListAdapter extends BaseAdapter implements Filterable{
 	}
 
     static class ViewHolder {
+		int localPremium;
+		ProgressBar loadingLogo;
+		ImageView logo;
         TextView cliente;
         TextView direccion;
         TextView telefono;

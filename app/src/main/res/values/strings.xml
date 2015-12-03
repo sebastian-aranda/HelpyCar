@@ -44,4 +44,8 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <string name="interstitial_ad_LocalActivity">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="banner_ad_ListMenuActivity">ca-app-pub-3940256099942544/6300978111</string>
+
 </resources>

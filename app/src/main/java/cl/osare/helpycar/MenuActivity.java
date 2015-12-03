@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 public class MenuActivity extends AppCompatActivity{
 	public final static String STORE_TYPE = "cl.osare.helpycar.menu.STORE_TYPE";
 	
@@ -74,6 +77,12 @@ public class MenuActivity extends AppCompatActivity{
 
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+		getSupportActionBar().setDisplayShowHomeEnabled(true);
+		getSupportActionBar().setIcon(R.drawable.logo);
+
+		AdView mAdView = (AdView) findViewById(R.id.adView);
+		AdRequest adRequest = new AdRequest.Builder().build();
+		mAdView.loadAd(adRequest);
 
 		Intent intent = getIntent();
 		int extra = intent.getIntExtra(MainActivity.RUBRO_CLASS, 0);

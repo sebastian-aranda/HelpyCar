@@ -9,10 +9,9 @@
     <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/appColor"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
     <ScrollView android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -157,20 +156,28 @@
                 android:layout_marginTop="16dp"
                 android:gravity="center">
 
-                <Button
-                    style="@style/LocalActivityButtons"
+                <ImageButton
                     android:id="@+id/callingButton"
-                    android:text="@string/callingButton"/>
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginRight="4dp"
+                    android:src="@drawable/localbutton_1"
+                    android:background="@null"/>
 
-                <Button
-                    style="@style/LocalActivityButtons"
+                <ImageButton
                     android:id="@+id/contactButton"
-                    android:text="@string/contactButton"/>
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginRight="4dp"
+                    android:src="@drawable/localbutton_2"
+                    android:background="@null"/>
 
-                <Button
-                    style="@style/LocalActivityButtons"
+                <ImageButton
                     android:id="@+id/mapButton"
-                    android:text="@string/mapButton"/>
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/localbutton_3"
+                    android:background="@null"/>
             </LinearLayout>
 
             <LinearLayout android:id="@+id/ofertas"
@@ -178,6 +185,12 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_marginTop="16dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/offers_upper"/>
 
             </LinearLayout>
 

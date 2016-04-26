@@ -2,7 +2,19 @@
 <resources>
 
     <string name="app_name">HelpyCar</string>
-    <string name="hello_world">Hello world!</string>
+
+    <!-- RegisterActivity -->
+    <string name="registerInputHint_name">Nombre</string>
+    <string name="registerInputHint_mail">Mail</string>
+    <string name="registerInputHint_cellPhone">Celular</string>
+    <string name="registerInputHint_birthDate">Fecha de Nacimiento</string>
+    <string name="registerInputHint_comuna">Comuna</string>
+    <string name="registerInputHint_carBrand">Marca</string>
+    <string name="registerInputHint_carModel">Modelo</string>
+    <string name="registerInputHint_carYear">Año Automóvil</string>
+    <string name="registerInputButton">Registrarse</string>
+    <string name="registerInputSkip">No quiero registrarme</string>
+
     
     <!-- MenuActivity -->
     <string name="MenuActivityTittle">Asdf</string>

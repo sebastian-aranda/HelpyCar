@@ -10,10 +10,9 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/appColor"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
     <GridView android:id="@+id/gridview"
         android:layout_below="@id/toolbar"
@@ -22,7 +21,8 @@
         android:numColumns="3"
         android:layout_marginTop="15dp"
         android:stretchMode="columnWidth"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:layout_marginBottom="80dp"/>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"

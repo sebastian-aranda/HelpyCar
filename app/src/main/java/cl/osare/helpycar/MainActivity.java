@@ -8,13 +8,17 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -79,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements
 	    }
 	    
 	    locales = db.getAllLocales();
-	    setMarkers(locales);	
+	    setMarkers(locales);
 	    
 	    Intent intent = getIntent();
 	    if (intent.hasExtra(ListMenuActivity.STORE_TYPE)){
@@ -129,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements
 	            LatLng coordinates = new LatLng(latitude, longitude);
 				local.setMarkerVisible(true);
 				local.getMarker().showInfoWindow();
-				mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 14));
+				mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 17));
 			}
 		}
 	}
@@ -140,15 +144,25 @@ public class MainActivity extends AppCompatActivity implements
             double latitude = Double.parseDouble(splits[0]);
             double longitude = Double.parseDouble(splits[1]);
 
-			//verificar premium
+			BitmapDescriptor markerIcon;
+			if (local.getPremium() == 0)
+				markerIcon = BitmapDescriptorFactory.fromResource(R.drawable.marker_1);
+			else if (local.getPremium() < 3)
+				markerIcon = BitmapDescriptorFactory.fromResource(R.drawable.marker_2);
+			else{
+				markerIcon = BitmapDescriptorFactory.fromResource(R.drawable.marker_3);
+			}
+
             Marker marker = mMap.addMarker(new MarkerOptions()
             	.position(new LatLng(latitude, longitude))
             	.title(local.getNombre())
-				//.icon(BitmapDescriptorFactory.fromResource(R.drawable.grua_menu)
-							.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-			);
-            
-            local.setMarker(marker);
+				.icon(markerIcon));
+
+			local.setMarker(marker);
+
+			if (local.getPremium() >= 3){
+				new DownloadMarkerLogoTask(getApplicationContext(), local, 80, 60).execute(Configurations.SERVER_MARKERS+local.getMarker_logo());
+			}
 	    }
     }
 	

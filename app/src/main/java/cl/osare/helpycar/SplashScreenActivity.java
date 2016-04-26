@@ -147,9 +147,9 @@ public class SplashScreenActivity extends Activity {
                 Local local = new Local(json.getInt("id"), json.getString("nombre"), 
                 		json.getString("localizacion"), json.getString("direccion"),
 						json.getString("telefono"), json.getString("horario"),
-						json.getString("mail"), json.getString("logo"),
-						json.getString("photo"), json.getString("descripcion"),
-						json.getInt("premium"));
+						json.getString("mail"), json.getString("marker"),
+						json.getString("logo"), json.getString("photo"),
+						json.getString("descripcion"),json.getInt("premium"));
                 
                 
                 db.addLocal(local);

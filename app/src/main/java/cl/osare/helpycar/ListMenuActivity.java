@@ -40,6 +40,8 @@ public class ListMenuActivity extends AppCompatActivity implements SearchView.On
 
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+		getSupportActionBar().setDisplayShowHomeEnabled(true);
+		getSupportActionBar().setIcon(R.drawable.logo);
 	    
 	    SQLiteHelper db = new SQLiteHelper(this);
 

@@ -15,6 +15,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -34,6 +35,7 @@ import android.text.InputType;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -91,6 +93,8 @@ public class LocalActivity extends AppCompatActivity {
 
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+		getSupportActionBar().setDisplayShowHomeEnabled(true);
+		getSupportActionBar().setIcon(R.drawable.logo);
 
 		db = new SQLiteHelper(this);
 		macAddress = getMacAddress();
@@ -99,7 +103,7 @@ public class LocalActivity extends AppCompatActivity {
 		interstitial.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
 
 		AdRequest adRequest = new AdRequest.Builder()
-				.addTestDevice("EF5124893544330E953A1E369725D2D4")
+				.addTestDevice("4CC68424BBB0C28A9F5B1796C0B8C3E4")
 				.build();
 
 		interstitial.loadAd(adRequest);
@@ -161,7 +165,7 @@ public class LocalActivity extends AppCompatActivity {
 			}
 		});
 		
-		Button callingButton = (Button)findViewById(R.id.callingButton);
+		ImageButton callingButton = (ImageButton) findViewById(R.id.callingButton);
 		callingButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -173,8 +177,8 @@ public class LocalActivity extends AppCompatActivity {
 				}
 			}
 		});
-		
-		Button contactButton = (Button) findViewById(R.id.contactButton);
+
+		ImageButton contactButton = (ImageButton) findViewById(R.id.contactButton);
 		contactButton.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -183,8 +187,8 @@ public class LocalActivity extends AppCompatActivity {
 					Toast.makeText(LocalActivity.this, "Usuario agregado correctamente", Toast.LENGTH_SHORT).show();
 			}
 		});
-		
-		Button mapButton = (Button) findViewById(R.id.mapButton);
+
+		ImageButton mapButton = (ImageButton) findViewById(R.id.mapButton);
 		mapButton.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {

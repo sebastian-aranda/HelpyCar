@@ -1,6 +1,5 @@
 package cl.osare.helpycar;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -12,26 +11,30 @@ import android.view.View;
 import android.view.Window;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.Calendar;
 
 
 public class RegisterActivity extends FragmentActivity {
     private static Context context;
+    private static SQLiteHelper db;
+    private static int registerState;
 
     private static EditText fechaNacimiento;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        setContentView(R.layout.activity_register);
+        db = new SQLiteHelper(this);
+        registerState = db.getGlobal("registerState");
+
+        setContentView(R.layout.activity_register_1);
 
         context = getApplicationContext();
 
-        fechaNacimiento = (EditText) findViewById(R.id.fechaNacimiento);
+        fechaNacimiento = (EditText) findViewById(R.id.registerInput_birthDate);
+        fechaNacimiento.setKeyListener(null);
     }
 
     public void showDatePickerDialog(View v) {

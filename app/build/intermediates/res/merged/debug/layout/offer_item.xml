@@ -5,15 +5,17 @@
     android:orientation="horizontal"
     android:layout_marginTop="16dp"
     android:padding="8dp"
-    android:background="@color/material_deep_teal_500">
+    android:background="@color/offersBackground">
     
     <TextView android:id="@+id/oferta"
         android:layout_width="120dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textColor="@color/blue"/>
 
     <TextView android:id="@+id/precio"
         android:layout_width="240dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textColor="@color/blue"/>
 
 </LinearLayout>
 <!-- From: file:/D:/StudioProjects/HelpyCar/app/src/main/res/layout/offer_item.xml -->

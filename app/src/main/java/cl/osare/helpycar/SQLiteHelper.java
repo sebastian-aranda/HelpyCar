@@ -27,6 +27,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		reloadRubrosLocales(db);
 		reloadCalificaciones(db);
 		reloadVersion(db);
+		reloadGlobal(db);
     }
 	
 	public SQLiteDatabase getDatabase(){
@@ -62,6 +63,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				"telefono TEXT, "+
 				"horario TEXT, "+
 				"mail TEXT, "+
+				"marker TEXT, "+
 				"logo TEXT, "+
 				"photo TEXT, "+
 				"descripcion TEXT, "+
@@ -105,6 +107,17 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		db.execSQL(sql);
 	}
 
+	public void reloadGlobal(SQLiteDatabase db){
+		db.execSQL("DROP TABLE IF EXISTS global");
+
+		String sql = "CREATE TABLE global (" +
+				"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				"nombre TEXT ," +
+				"valor INTEGER)";
+
+		db.execSQL(sql);
+	}
+
 	//inserting functions
 	public void addLocal(Local local){
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -116,6 +129,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		values.put("telefono", local.getTelefono());
 		values.put("horario", local.getHorario());
 		values.put("mail", local.getMail());
+		values.put("marker", local.getMarker_logo());
 		values.put("logo", local.getLogo());
 		values.put("photo", local.getPhoto());
 		values.put("descripcion", local.getDescripcion());
@@ -179,6 +193,18 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		db.close();
 	}
 
+	public void addGlobal(String nombre, int valor) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put("nombre", nombre);
+		values.put("valor", valor);
+
+		db.insert("global", null, values);
+
+		db.close();
+	}
+
 	//getting functions
 	public Local getLocal(int id){
 	    SQLiteDatabase db = this.getReadableDatabase();
@@ -197,10 +223,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	    local.setTelefono(cursor.getString(4));
 	    local.setHorario(cursor.getString(5));
 	    local.setMail(cursor.getString(6));
-		local.setLogo(cursor.getString(7));
-		local.setPhoto(cursor.getString(8));
-	    local.setDescripcion(cursor.getString(9));
-		local.setPremium(Integer.parseInt(cursor.getString(10)));
+		local.setMarker_logo(cursor.getString(7));
+		local.setLogo(cursor.getString(8));
+		local.setPhoto(cursor.getString(9));
+	    local.setDescripcion(cursor.getString(10));
+		local.setPremium(Integer.parseInt(cursor.getString(11)));
 
 	    return local;
 	}
@@ -223,10 +250,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				local.setTelefono(cursor.getString(4));
 				local.setHorario(cursor.getString(5));
 				local.setMail(cursor.getString(6));
-				local.setLogo(cursor.getString(7));
-				local.setPhoto(cursor.getString(8));
-				local.setDescripcion(cursor.getString(9));
-				local.setPremium(Integer.parseInt(cursor.getString(10)));
+				local.setMarker_logo(cursor.getString(7));
+				local.setLogo(cursor.getString(8));
+				local.setPhoto(cursor.getString(9));
+				local.setDescripcion(cursor.getString(10));
+				local.setPremium(Integer.parseInt(cursor.getString(11)));
 
 				locales.add(local);
 			} while (cursor.moveToNext());
@@ -253,10 +281,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				local.setTelefono(cursor.getString(4));
 				local.setHorario(cursor.getString(5));
 				local.setMail(cursor.getString(6));
-				local.setLogo(cursor.getString(7));
-				local.setPhoto(cursor.getString(8));
-				local.setDescripcion(cursor.getString(9));
-				local.setPremium(Integer.parseInt(cursor.getString(10)));
+				local.setMarker_logo(cursor.getString(7));
+				local.setLogo(cursor.getString(8));
+				local.setPhoto(cursor.getString(9));
+				local.setDescripcion(cursor.getString(10));
+				local.setPremium(Integer.parseInt(cursor.getString(11)));
 
 				locales.add(local);
 			} while (cursor.moveToNext());
@@ -354,6 +383,25 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		}
 
 		return version;
+	}
+
+	public int getGlobal(String nombre){
+
+		String query = "SELECT * FROM global WHERE nombre = '"+nombre+"'";
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(query, null);
+
+		int value = 0;
+		if (cursor != null){
+			try{
+				cursor.moveToFirst();
+				value = cursor.getInt(2);
+			} catch (IndexOutOfBoundsException e){
+				value = -1;
+			}
+		}
+
+		return value;
 	}
 
 	//UPDATE

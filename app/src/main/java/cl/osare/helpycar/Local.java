@@ -14,6 +14,7 @@ public class Local{
 	private String telefono;
 	private String horario;
 	private String mail;
+	private String marker_logo;
 	private String logo;
 	private String photo;
 	private String descripcion;
@@ -24,7 +25,7 @@ public class Local{
 	public Local(){}
 	
 	public Local(int id, String nombre, String localizacion, String direccion, String telefono, String horario,
-			String mail, String logo, String photo, String descripcion, int premium){
+			String mail, String marker_logo, String logo, String photo, String descripcion, int premium){
 		this.id = id;
 		this.nombre = nombre;
 		this.localizacion = localizacion;
@@ -32,6 +33,7 @@ public class Local{
 		this.telefono = telefono;
 		this.horario = horario;
 		this.mail = mail;
+		this.marker_logo = marker_logo;
 		this.logo = logo;
 		this.photo = photo;
 		this.descripcion = descripcion;
@@ -65,6 +67,10 @@ public class Local{
 
 	public String getMail() {
 		return mail;
+	}
+
+	public String getMarker_logo() {
+		return marker_logo;
 	}
 
 	public String getLogo() {
@@ -114,6 +120,10 @@ public class Local{
 
 	public void setMail(String mail) {
 		this.mail = mail;
+	}
+
+	public void setMarker_logo(String marker_logo) {
+		this.marker_logo = marker_logo;
 	}
 
 	public void setLogo(String logo) {

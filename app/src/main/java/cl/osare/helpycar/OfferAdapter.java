@@ -1,6 +1,7 @@
 package cl.osare.helpycar;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,10 @@ public class OfferAdapter extends BaseAdapter{
 		
 		holder.oferta.setText(oferta.getNombre());
 		holder.precio.setText(String.valueOf(oferta.getPrecio()));
+
+		Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/font.ttf");
+		holder.oferta.setTypeface(tf);
+		holder.precio.setTypeface(tf);
 		
 		return listView;
 	}

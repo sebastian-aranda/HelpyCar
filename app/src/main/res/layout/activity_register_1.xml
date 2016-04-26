@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="cl.osare.helpycar.RegisterActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="24dp"
+            android:src="@drawable/logotipo"/>
+
+        <EditText
+            style="@style/registerInputs"
+            android:id="@+id/registerInput_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/registerInputHint_name"/>
+
+        <EditText
+            style="@style/registerInputs"
+            android:id="@+id/registerInput_mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/registerInputHint_mail"/>
+
+        <EditText
+            style="@style/registerInputs"
+            android:id="@+id/registerInput_cellPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/registerInputHint_cellPhone"/>
+
+        <LinearLayout
+            style="@style/registerInputs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/registerInput_birthDate"
+                android:layout_width="0dp"
+                android:layout_weight=".8"
+                android:layout_height="match_parent"
+                android:hint="@string/registerInputHint_birthDate"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight=".2"
+                android:layout_height="wrap_content"
+                android:text="..."
+                android:onClick="showDatePickerDialog" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/registerInputs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Comuna:"/>
+
+            <Spinner
+                android:id="@+id/register_comuna_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <EditText
+            style="@style/registerInputs"
+            android:id="@+id/registerInput_carBrand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/registerInputHint_carBrand"/>
+
+        <EditText
+            style="@style/registerInputs"
+            android:id="@+id/registerInput_carModel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/registerInputHint_carModel"/>
+
+        <EditText
+            style="@style/registerInputs"
+            android:id="@+id/registerInput_carYear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/registerInputHint_carYear"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:text="@string/registerInputButton"
+            android:onClick="registrar" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/blue"
+            android:text="@string/registerInputSkip"/>
+
+    </LinearLayout>
+</ScrollView>
